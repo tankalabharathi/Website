@@ -277,6 +277,10 @@ export interface Tag {
  */
 export interface Project {
   id: number;
+  /**
+   * Set automatically when the record is moved to or restored from Trash.
+   */
+  isDeleted?: ('N' | 'Y') | null;
   title: string;
   slug: string;
   /**
@@ -325,6 +329,7 @@ export interface Project {
   } | null;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
   _status?: ('draft' | 'published') | null;
 }
 /**
@@ -333,6 +338,10 @@ export interface Project {
  */
 export interface Service {
   id: number;
+  /**
+   * Set automatically when the record is moved to or restored from Trash.
+   */
+  isDeleted?: ('N' | 'Y') | null;
   title: string;
   slug: string;
   summary: string;
@@ -353,6 +362,7 @@ export interface Service {
   } | null;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
   _status?: ('draft' | 'published') | null;
 }
 /**
@@ -363,6 +373,10 @@ export interface Service {
  */
 export interface JournalArticle {
   id: number;
+  /**
+   * Set automatically when the record is moved to or restored from Trash.
+   */
+  isDeleted?: ('N' | 'Y') | null;
   title: string;
   /**
    * Use a lowercase, hyphen-separated URL slug. Changing a published slug changes its public URL.
@@ -384,6 +398,7 @@ export interface JournalArticle {
   } | null;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
   _status?: ('draft' | 'published') | null;
 }
 /**
@@ -392,6 +407,10 @@ export interface JournalArticle {
  */
 export interface Testimonial {
   id: number;
+  /**
+   * Set automatically when the record is moved to or restored from Trash.
+   */
+  isDeleted?: ('N' | 'Y') | null;
   quote: string;
   /**
    * Use a privacy-safe verified label, not an invented client name.
@@ -409,6 +428,7 @@ export interface Testimonial {
   } | null;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
   _status?: ('draft' | 'published') | null;
 }
 /**
@@ -417,6 +437,10 @@ export interface Testimonial {
  */
 export interface Enquiry {
   id: number;
+  /**
+   * Set automatically when the record is moved to or restored from Trash.
+   */
+  isDeleted?: ('N' | 'Y') | null;
   name: string;
   mobile: string;
   email: string;
@@ -450,6 +474,7 @@ export interface Enquiry {
   } | null;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -779,6 +804,7 @@ export interface TagsSelect<T extends boolean = true> {
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
+  isDeleted?: T;
   title?: T;
   slug?: T;
   isSample?: T;
@@ -808,6 +834,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   _status?: T;
 }
 /**
@@ -815,6 +842,7 @@ export interface ProjectsSelect<T extends boolean = true> {
  * via the `definition` "services_select".
  */
 export interface ServicesSelect<T extends boolean = true> {
+  isDeleted?: T;
   title?: T;
   slug?: T;
   summary?: T;
@@ -826,6 +854,7 @@ export interface ServicesSelect<T extends boolean = true> {
   updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   _status?: T;
 }
 /**
@@ -833,6 +862,7 @@ export interface ServicesSelect<T extends boolean = true> {
  * via the `definition` "journal-articles_select".
  */
 export interface JournalArticlesSelect<T extends boolean = true> {
+  isDeleted?: T;
   title?: T;
   slug?: T;
   category?: T;
@@ -845,6 +875,7 @@ export interface JournalArticlesSelect<T extends boolean = true> {
   updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   _status?: T;
 }
 /**
@@ -852,6 +883,7 @@ export interface JournalArticlesSelect<T extends boolean = true> {
  * via the `definition` "testimonials_select".
  */
 export interface TestimonialsSelect<T extends boolean = true> {
+  isDeleted?: T;
   quote?: T;
   clientLabel?: T;
   projectLabel?: T;
@@ -860,6 +892,7 @@ export interface TestimonialsSelect<T extends boolean = true> {
   updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   _status?: T;
 }
 /**
@@ -867,6 +900,7 @@ export interface TestimonialsSelect<T extends boolean = true> {
  * via the `definition` "enquiries_select".
  */
 export interface EnquiriesSelect<T extends boolean = true> {
+  isDeleted?: T;
   name?: T;
   mobile?: T;
   email?: T;
@@ -884,6 +918,7 @@ export interface EnquiriesSelect<T extends boolean = true> {
   updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

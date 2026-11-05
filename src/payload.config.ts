@@ -123,8 +123,15 @@ export default buildConfig({
   },
   storage: storageAdapters,
   db: postgresAdapter({
+    // Schema changes only via migrations; dev push would drop S3-only media columns.
+    push: false,
     pool: {
       connectionString: requireEnv('DATABASE_URL'),
+      max: Number(process.env.DB_POOL_MAX ?? 10),
+      connectionTimeoutMillis: 10_000,
+      idleTimeoutMillis: 30_000,
+      statement_timeout: 30_000,
+      idle_in_transaction_session_timeout: 60_000,
     },
     migrationDir: path.resolve(dirname, 'migrations'),
   }),

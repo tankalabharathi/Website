@@ -1,9 +1,11 @@
 import type { Access, CollectionConfig } from 'payload'
+import { isDeletedField } from '../fields/isDeleted'
 
 const isAdmin: Access = ({ req }) => req.user?.collection === 'admins'
 
 export const JournalArticles: CollectionConfig = {
   slug: 'journal-articles',
+  trash: true,
   labels: { singular: 'Journal article', plural: 'Journal' },
   admin: {
     group: 'Website',
@@ -24,6 +26,7 @@ export const JournalArticles: CollectionConfig = {
     maxPerDoc: 20,
   },
   fields: [
+    isDeletedField,
     { name: 'title', type: 'text', required: true },
     {
       name: 'slug',

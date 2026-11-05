@@ -1,10 +1,12 @@
 import type { Access, CollectionConfig, FieldAccess } from 'payload'
+import { isDeletedField } from '../fields/isDeleted'
 
 const isAdmin: Access = ({ req }) => req.user?.collection === 'admins'
 const isAdminField: FieldAccess = ({ req }) => req.user?.collection === 'admins'
 
 export const Enquiries: CollectionConfig = {
   slug: 'enquiries',
+  trash: true,
   admin: {
     group: 'Operations',
     useAsTitle: 'name',
@@ -16,7 +18,10 @@ export const Enquiries: CollectionConfig = {
     read: isAdmin,
     update: isAdmin,
   },
+  // Avoid duplicating personal contact details into version history.
+  versions: false,
   fields: [
+    isDeletedField,
     { name: 'name', type: 'text', required: true },
     { name: 'mobile', type: 'text', required: true },
     { name: 'email', type: 'email', required: true },
@@ -78,4 +83,13 @@ export const Enquiries: CollectionConfig = {
       access: { create: isAdminField, read: isAdminField, update: isAdminField },
     },
   ],
+  hooks: {
+    beforeChange: [
+      // Public submissions must not be able to create already-trashed records.
+      ({ data, operation, req }) => {
+        if (operation === 'create' && req.user?.collection !== 'admins') delete data.deletedAt
+        return data
+      },
+    ],
+  },
 }

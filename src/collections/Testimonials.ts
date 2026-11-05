@@ -1,9 +1,11 @@
 import type { Access, CollectionConfig } from 'payload'
+import { isDeletedField } from '../fields/isDeleted'
 
 const isAdmin: Access = ({ req }) => req.user?.collection === 'admins'
 
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
+  trash: true,
   admin: {
     group: 'Website',
     useAsTitle: 'clientLabel',
@@ -18,6 +20,7 @@ export const Testimonials: CollectionConfig = {
   },
   versions: { drafts: true, maxPerDoc: 10 },
   fields: [
+    isDeletedField,
     { name: 'quote', type: 'textarea', required: true },
     {
       name: 'clientLabel',

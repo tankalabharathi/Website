@@ -1,4 +1,5 @@
 import type { Access, CollectionConfig, Where } from 'payload'
+import { isDeletedField } from '../fields/isDeleted'
 
 const isAdmin: Access = ({ req }) => req.user?.collection === 'admins'
 const publicServiceQuery: Where = {
@@ -7,6 +8,7 @@ const publicServiceQuery: Where = {
 
 export const Services: CollectionConfig = {
   slug: 'services',
+  trash: true,
   admin: {
     group: 'Website',
     useAsTitle: 'title',
@@ -20,6 +22,7 @@ export const Services: CollectionConfig = {
   },
   versions: { drafts: true, maxPerDoc: 15 },
   fields: [
+    isDeletedField,
     { name: 'title', type: 'text', required: true },
     { name: 'slug', type: 'text', required: true, unique: true, index: true },
     { name: 'summary', type: 'textarea', required: true },
